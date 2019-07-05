@@ -16,7 +16,8 @@ RUN apk add --no-cache git && \
     cd ${APP_HOME} && \
     virtualenv venv && \
     . venv/bin/activate && \
-    pip3 install --no-cache-dir paho-mqtt configobj pyserial requests
+    pip3 install --no-cache-dir paho-mqtt configobj pyserial requests && \
+    git clone https://github.com/lmssdd/emonhub.git
 
 # ============================================================================ #
 # Final stage: lean, intended to be used as execute container                  #
@@ -33,13 +34,16 @@ COPY --from=development ${APP_HOME} ${APP_HOME}
 
 WORKDIR ${APP_HOME}
 
-COPY src src
+#RUN apk add --no-cache git && \
+#    git clone https://github.com/lmssdd/emonhub.git
 
-COPY conf conf
+#COPY src src
+
+#COPY conf conf
 
 #EXPOSE 5000
 
-ENTRYPOINT ["src/entrypoint.sh"]
+ENTRYPOINT ["emonhub/src/entrypoint.sh"]
 
 #CMD [ "-c", "/opt/configs/tdm.conf" ]
 
