@@ -3,7 +3,7 @@ ARG APP_HOME=/opt/emon433/
 # ============================================================================ #
 # Development stage: used only to create the python virtual environment        #
 # ============================================================================ #
-FROM tdmproject/alpine-python-3:arm64v8-3.9 AS development
+FROM arm32v7/alpine:alpine3.9 AS development
 
 LABEL maintainer=""
 
@@ -16,15 +16,14 @@ RUN apk add --no-cache git && \
     cd ${APP_HOME} && \
     virtualenv venv && \
     . venv/bin/activate && \
-    pip3 install --no-cache-dir paho-mqtt influxdb configobj pyserial && \
-    git clone https://github.com/openenergymonitor/emonhub.git
+    pip3 install --no-cache-dir paho-mqtt configobj pyserial requests
 
 # ============================================================================ #
 # Final stage: lean, intended to be used as execute container                  #
 # docker build --target=final -f docker/Dockerfile \                           #
 #              -t tdmproject/edge-emon433-handler .                            #
 # ============================================================================ #
-FROM tdmproject/alpine-python-3:arm64v8-3.9 AS final
+FROM arm32v7/alpine:alpine3.9 AS final
 
 ARG APP_HOME
 
@@ -36,23 +35,25 @@ WORKDIR ${APP_HOME}
 
 COPY src src
 
-EXPOSE 5000
+COPY conf conf
 
-ENTRYPOINT ["src/entrypoint.sh"]
+#EXPOSE 5000
 
-CMD [ "-c", "/opt/configs/tdm.conf" ]
+#ENTRYPOINT ["src/entrypoint.sh"]
+
+#CMD [ "-c", "/opt/configs/tdm.conf" ]
 
 # ============================================================================ #
 # Testing Stage: final stage for testing purposes                              #
 # docker build --target=testing -f docker/Dockerfile \                         #
 #              -t tdmproject/edge-emon433-handler .                            #
 # ============================================================================ #
-FROM final AS testing
+#FROM final AS testing
 
-ARG APP_HOME
+#ARG APP_HOME
 
-ENV APP_HOME=${APP_HOME}
+#ENV APP_HOME=${APP_HOME}
 
-WORKDIR ${APP_HOME}
+#WORKDIR ${APP_HOME}
 
-COPY tests tests
+#COPY tests tests
