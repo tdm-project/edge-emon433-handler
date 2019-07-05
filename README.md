@@ -2,7 +2,7 @@
 
 ## Edge handler for Open Energy Monitor devices
 
-To install on Edge device it is necessary to configure the serial port on raspberry pi 3 as described in:
+To install on Edge device it is necessary to configure the serial port on raspberry pi 3 as described in  https://spellfoundry.com/2016/05/29/configuring-gpio-serial-port-raspbian-jessie-including-pi-3/ :
 
 Therefore:
 ```bash
