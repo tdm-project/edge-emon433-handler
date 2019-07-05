@@ -16,7 +16,7 @@ RUN apk add --no-cache git && \
     cd ${APP_HOME} && \
     virtualenv venv && \
     . venv/bin/activate && \
-    pip3 install --no-cache-dir paho-mqtt configobj pyserial requests && \
+    pip3 install --no-cache-dir paho-mqtt configobj pyserial requests influxdb && \
     git clone https://github.com/lmssdd/emonhub.git
 
 # ============================================================================ #
