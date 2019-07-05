@@ -3,7 +3,7 @@ ARG APP_HOME=/opt/emon433/
 # ============================================================================ #
 # Development stage: used only to create the python virtual environment        #
 # ============================================================================ #
-FROM arm32v7/alpine:alpine3.9 AS development
+FROM arm32v7/python:alpine3.9 AS development
 
 LABEL maintainer=""
 
@@ -23,7 +23,7 @@ RUN apk add --no-cache git && \
 # docker build --target=final -f docker/Dockerfile \                           #
 #              -t tdmproject/edge-emon433-handler .                            #
 # ============================================================================ #
-FROM arm32v7/alpine:alpine3.9 AS final
+FROM arm32v7/python:alpine3.9 AS final
 
 ARG APP_HOME
 
@@ -39,7 +39,7 @@ COPY conf conf
 
 #EXPOSE 5000
 
-#ENTRYPOINT ["src/entrypoint.sh"]
+ENTRYPOINT ["src/entrypoint.sh"]
 
 #CMD [ "-c", "/opt/configs/tdm.conf" ]
 
