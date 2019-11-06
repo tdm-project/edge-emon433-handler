@@ -3,7 +3,7 @@ ARG APP_HOME=/opt/emon433/
 # ============================================================================ #
 # Development stage: used only to create the python virtual environment        #
 # ============================================================================ #
-FROM tdmproject/alpine-python-3:arm64v8-3.9 AS development
+FROM tdmproject/alpine-python-3:arm32v7-3.10 AS development
 
 LABEL maintainer=""
 
@@ -17,14 +17,15 @@ RUN apk add --no-cache git && \
     virtualenv venv && \
     . venv/bin/activate && \
     pip3 install --no-cache-dir paho-mqtt influxdb configobj pyserial && \
-    git clone https://github.com/openenergymonitor/emonhub.git
+    git clone https://github.com/tdm-project/emonhub.git && \
+    cd emonhub && git checkout feature/tdm_edge_formats
 
 # ============================================================================ #
 # Final stage: lean, intended to be used as execute container                  #
 # docker build --target=final -f docker/Dockerfile \                           #
 #              -t tdmproject/edge-emon433-handler .                            #
 # ============================================================================ #
-FROM tdmproject/alpine-python-3:arm64v8-3.9 AS final
+FROM tdmproject/alpine-python-3:arm32v7-3.10 AS final
 
 ARG APP_HOME
 
@@ -34,13 +35,11 @@ COPY --from=development ${APP_HOME} ${APP_HOME}
 
 WORKDIR ${APP_HOME}
 
-COPY src src
-
 EXPOSE 5000
 
-ENTRYPOINT ["src/entrypoint.sh"]
+ENTRYPOINT ["emonhub/src/entrypoint.sh"]
 
-CMD [ "-c", "/opt/configs/tdm.conf" ]
+# CMD [ "-c", "/opt/configs/tdm.conf" ]
 
 # ============================================================================ #
 # Testing Stage: final stage for testing purposes                              #
