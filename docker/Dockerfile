@@ -5,7 +5,7 @@ ARG APP_HOME=/opt/emon433/
 # ============================================================================ #
 FROM tdmproject/alpine-python-3:arm32v7-3.10 AS development
 
-LABEL maintainer=""
+LABEL maintainer="Massimo Gaggero <massimo dot gaggero at crs4 dot it>"
 
 ARG APP_HOME
 
