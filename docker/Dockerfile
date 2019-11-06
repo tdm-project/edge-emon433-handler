@@ -10,15 +10,17 @@ LABEL maintainer=""
 ARG APP_HOME
 
 # Install required packages
-RUN apk add --no-cache git && \
-	pip3 install --no-cache-dir virtualenv && \
-	mkdir -p ${APP_HOME} && \
-	cd ${APP_HOME} && \
-	virtualenv venv && \
-	. venv/bin/activate && \
-	pip3 install --no-cache-dir paho-mqtt influxdb configobj pyserial && \
-	git clone https://github.com/tdm-project/emonhub.git && \
-	cd emonhub && git checkout feature/tdm_edge_formats
+# RUN apk add --no-cache git && \
+# 	pip3 install --no-cache-dir virtualenv && \
+# 	mkdir -p ${APP_HOME} && \
+# 	cd ${APP_HOME} && \
+# 	virtualenv venv && \
+# 	. venv/bin/activate && \
+# 	pip3 install --no-cache-dir paho-mqtt influxdb configobj pyserial && \
+# 	git clone https://github.com/tdm-project/emonhub.git && \
+# 	cd emonhub && git checkout feature/tdm_edge_formats
+
+RUN apk add --no-cache git
 
 # ============================================================================ #
 # Final stage: lean, intended to be used as execute container                  #
