@@ -20,7 +20,7 @@ ARG APP_HOME
 # 	git clone https://github.com/tdm-project/emonhub.git && \
 # 	cd emonhub && git checkout feature/tdm_edge_formats
 
-RUN apk add --no-cache git
+RUN true
 
 # ============================================================================ #
 # Final stage: lean, intended to be used as execute container                  #
