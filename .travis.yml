@@ -13,7 +13,7 @@ script:
 # build image
 - make build
 # test image
-- make test
+# - make test
 # push image
 - >
   if [ "$TRAVIS_BRANCH" == "develop" ] && [ "$TRAVIS_PULL_REQUEST" == "false" ]; then
