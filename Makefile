@@ -6,7 +6,7 @@ DOCKER_IMAGE_TESTING=$(DOCKER_IMAGE_NAME):testing-$(DOCKER_IMAGE_VERSION)
 default: build
 
 build:
-	docker build --platform=arm --target=final -f docker/Dockerfile -t $(DOCKER_IMAGE_TAGNAME) .
+	docker build --target=final -f docker/Dockerfile -t $(DOCKER_IMAGE_TAGNAME) .
 	docker tag $(DOCKER_IMAGE_TAGNAME) $(DOCKER_IMAGE_NAME):latest
 
 push:
